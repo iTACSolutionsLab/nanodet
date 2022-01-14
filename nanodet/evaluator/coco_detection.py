@@ -91,3 +91,34 @@ class CocoDetectionEvaluator:
         for k, v in zip(self.metric_names, aps):
             eval_results[k] = v
         return eval_results
+
+
+class CocoDetectionEvaluatorOnlyPerson(CocoDetectionEvaluator):
+    def evaluate(self, results, save_dir, rank=-1):
+        results_json = self.results2json(results)
+        if len(results_json) == 0:
+            warnings.warn(
+                "Detection result is empty! Please check whether "
+                "training set is too small (need to increase val_interval "
+                "in config and train more epochs). Or check annotation "
+                "correctness."
+            )
+            empty_eval_results = {}
+            for key in self.metric_names:
+                empty_eval_results[key] = 0
+            return empty_eval_results
+        json_path = os.path.join(save_dir, "results{}.json".format(rank))
+        json.dump(results_json, open(json_path, "w"))
+        coco_dets = self.coco_api.loadRes(json_path)
+        coco_eval = COCOeval(
+            copy.deepcopy(self.coco_api), copy.deepcopy(coco_dets), "bbox"
+        )
+        coco_eval.params.catIds = [1]  # only evaluate person
+        coco_eval.evaluate()
+        coco_eval.accumulate()
+        coco_eval.summarize()
+        aps = coco_eval.stats[:6]
+        eval_results = {}
+        for k, v in zip(self.metric_names, aps):
+            eval_results[k] = v
+        return eval_results

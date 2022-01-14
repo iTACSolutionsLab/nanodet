@@ -13,7 +13,7 @@
 # limitations under the License.
 import copy
 
-from .coco_detection import CocoDetectionEvaluator
+from .coco_detection import CocoDetectionEvaluator, CocoDetectionEvaluatorOnlyPerson
 
 
 def build_evaluator(cfg, dataset):
@@ -21,5 +21,7 @@ def build_evaluator(cfg, dataset):
     name = evaluator_cfg.pop("name")
     if name == "CocoDetectionEvaluator":
         return CocoDetectionEvaluator(dataset)
+    elif name == "CocoDetectionEvaluatorOnlyPerson":
+        return CocoDetectionEvaluatorOnlyPerson
     else:
         raise NotImplementedError
