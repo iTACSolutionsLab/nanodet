@@ -22,6 +22,6 @@ def build_evaluator(cfg, dataset):
     if name == "CocoDetectionEvaluator":
         return CocoDetectionEvaluator(dataset)
     elif name == "CocoDetectionEvaluatorOnlyPerson":
-        return CocoDetectionEvaluatorOnlyPerson
+        return CocoDetectionEvaluatorOnlyPerson(dataset)
     else:
         raise NotImplementedError
