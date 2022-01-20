@@ -1,6 +1,6 @@
 Cython
 matplotlib
-numpy
+numpy>=1.20
 onnx
 onnx-simplifier
 opencv-python
@@ -13,3 +13,5 @@ torch>=1.7
 torchmetrics
 torchvision
 tqdm
+MNN
+scipy
