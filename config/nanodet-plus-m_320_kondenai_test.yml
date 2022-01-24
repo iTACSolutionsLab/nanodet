@@ -5,7 +5,7 @@
 #           AP_small = 0.083
 #               AP_m = 0.278
 #               AP_l = 0.451
-save_dir: workspace/nanodet-plus-m_320_kondenai
+save_dir: workspace/nanodet-plus-m_320_kondenai_test
 model:
   weight_averager:
     name: ExpMovingAverager
@@ -82,7 +82,7 @@ data:
   val:
     name: CocoDataset
     img_path: dataset/coco/val2017
-    ann_path: dataset/coco/annotations/val2017_person_custom.json
+    ann_path: dataset/coco/annotations/yumoto_test.json
     input_size: [320,320] #[w,h]
     keep_ratio: False
     pipeline:
